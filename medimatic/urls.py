@@ -45,6 +45,12 @@ urlpatterns = [
     path('user/',include('apps.user.api.router')),
     path('activity/',include('apps.activity.api.router')),
     path('coordination/',include('apps.coordination.api.router')),
+    path('product/',include('apps.product.api.router')),
+    path('serie/',include('apps.serie.api.router')),
+    path('entry/',include('apps.entry.api.router')),
+    path('exit/',include('apps.exit.api.router')),
+
+    #login
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('login/',Login.as_view(), name = 'login'),

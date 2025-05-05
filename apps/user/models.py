@@ -28,10 +28,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     COORDINATION = 1 
     ADMIN = 2
     ENGINEER_BIOMEDICAL = 3
+    ACCOUNTANT = 4
     ROLE_CHOICES = (
         (COORDINATION, 'coordination'),
         (ENGINEER_BIOMEDICAL, 'biomedical'),
         (ADMIN, 'admin'),
+        (ACCOUNTANT, 'accountant'),
     )
 
     id = models.AutoField(primary_key = True)
