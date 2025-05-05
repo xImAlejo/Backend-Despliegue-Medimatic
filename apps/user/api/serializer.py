@@ -13,7 +13,8 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
     def validate_rol(self, value):
-        if value not in [1, 2, 3]:
+        valid_roles = [choice[0] for choice in User.ROLE_CHOICES]
+        if value not in valid_roles:
             raise serializers.ValidationError("Rol inválido")
         return value
     
