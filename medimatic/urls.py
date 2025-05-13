@@ -49,6 +49,7 @@ urlpatterns = [
     path('serie/',include('apps.serie.api.router')),
     path('entry/',include('apps.entry.api.router')),
     path('exit/',include('apps.exit.api.router')),
+    path('proyect/',include('apps.proyect.api.router')),
 
     #login
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

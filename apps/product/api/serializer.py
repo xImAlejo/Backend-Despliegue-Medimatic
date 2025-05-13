@@ -13,7 +13,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'type', 'imported', 'description', 'brand', 'unit_price', 'type_change', 
             'bill_text', 'date_bill', 'model', 'origin', 'date_manufacture', 'minsa_code', 
-            'minsa_description', 'supplier', 'entry_point', 'exit_point', 'date', 'entry_guide', 'exit_guide', 
+            'minsa_description', 'supplier', 'entry_point', 'exit_point', 'date','exit_date','entry_guide', 'exit_guide', 
             'proyect', 'responsible', 'coin_bill', 'series_input'
         ]
 

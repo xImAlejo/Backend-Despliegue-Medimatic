@@ -103,7 +103,7 @@ class ProductViewSets(viewsets.ModelViewSet):
             return Response({'error': 'El valor de quantity_exit debe ser un número entero'}, status=status.HTTP_400_BAD_REQUEST)
     
     @action(detail=True, methods=['put'])
-    def UpdateExitandProyectandGuide(self, request, pk=None):
+    def UpdateExitandProyectandGuideandExitDate(self, request, pk=None):
         try:
             product = self.get_object(pk)
         except Product.DoesNotExist:
@@ -112,6 +112,7 @@ class ProductViewSets(viewsets.ModelViewSet):
         exit_point = request.data.get('exit_point')
         proyect = request.data.get('proyect')
         exit_guide = request.data.get('exit_guide')
+        exit_date = request.data.get('exit_date')
 
         if proyect is None:
             return Response({'error': 'Se requiere el campo proyect'}, status=status.HTTP_400_BAD_REQUEST)
@@ -120,7 +121,8 @@ class ProductViewSets(viewsets.ModelViewSet):
             product.exit_point = exit_point
             product.proyect = proyect
             product.exit_guide = exit_guide
+            product.exit_date = exit_date
             product.save()
-            return Response({'exit_point': product.exit_point,'proyect': product.proyect, 'exit_guide':product.exit_guide}, status=status.HTTP_200_OK)
+            return Response({'exit_point': product.exit_point,'proyect': product.proyect, 'exit_guide':product.exit_guide, 'exit_date':product.exit_date}, status=status.HTTP_200_OK)
         except ValueError:
-            return Response({'error': 'El valor de exit_point, proyect o exit_guide no esta bien colocado'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'El valor de exit_point, proyect, exit_guide o exit_date no esta bien colocado'}, status=status.HTTP_400_BAD_REQUEST)

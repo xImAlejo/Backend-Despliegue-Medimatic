@@ -2,13 +2,13 @@ from rest_framework import status
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
-from .serializer import ActivitySerializer
-from apps.activity.models import Activity
+from .serializer import ProyectSerializer
+from apps.proyect.models import Proyect
 from rest_framework.decorators import action
 
-class ActivityViewSets(viewsets.ModelViewSet):
-    model = Activity
-    serializer_class = ActivitySerializer
+class ProyectViewSets(viewsets.ModelViewSet):
+    model = Proyect
+    serializer_class = ProyectSerializer
     queryset = None
 
     def get_object(self, pk):
@@ -52,7 +52,7 @@ class ActivityViewSets(viewsets.ModelViewSet):
             return Response({'message': 'Datos inválidos', 'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         
         except self.model.DoesNotExist:
-            return Response({'message': 'La activity que intenta actualizar no existe'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'message': 'El proyect que intenta actualizar no existe'}, status=status.HTTP_404_NOT_FOUND)
     
     def destroy(self, request, *args, **kwargs):
         pk = kwargs.get('pk')
@@ -60,32 +60,7 @@ class ActivityViewSets(viewsets.ModelViewSet):
         try:
             user = self.model.objects.get(pk=pk)
             user.delete()
-            return Response({'message': 'Activity eliminado correctamente'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Proyect eliminado correctamente'}, status=status.HTTP_200_OK)
         except self.model.DoesNotExist:
-            return Response({'message': 'Activity no encontrado'}, status=status.HTTP_404_NOT_FOUND)
-    
-    @action(detail=True, methods=['get'])
-    def getActivitiesbyUserId(self,request,pk=None):
-       
-        self.queryset = self.serializer_class().Meta.model.objects.filter(user_id=pk)
-        Activity = self.get_queryset()
-        Activity_serializer = self.serializer_class(Activity, many=True)
-        data = {
-            
-            "total": self.get_queryset().count(),
-            "rows": Activity_serializer.data
-        }
-        return Response(data, status=status.HTTP_200_OK)
-    
-    @action(detail=True, methods=['get'])
-    def getActivitiesbyProyectId(self,request,pk=None):
-       
-        self.queryset = self.serializer_class().Meta.model.objects.filter(proyect_id=pk)
-        Activity = self.get_queryset()
-        Activity_serializer = self.serializer_class(Activity, many=True)
-        data = {
-            
-            "total": self.get_queryset().count(),
-            "rows": Activity_serializer.data
-        }
-        return Response(data, status=status.HTTP_200_OK)
+            return Response({'message': 'Proyect no encontrado'}, status=status.HTTP_404_NOT_FOUND)
+

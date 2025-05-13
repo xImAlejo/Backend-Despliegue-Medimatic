@@ -22,6 +22,7 @@ class Product(models.Model):
     entry_point = models.CharField(max_length=100,blank=True, null=True)
     exit_point = models.CharField(max_length=100,blank=True, null=True)
     date = models.DateField('Date', auto_now=False,auto_now_add=False)
+    exit_date = models.DateField('Exit Date', auto_now=False,auto_now_add=False, blank=True, null=True)
     entry_guide = models.CharField(max_length=200)
     exit_guide = models.CharField(max_length=200,blank=True, null=True)
     proyect = models.CharField(max_length=200)
