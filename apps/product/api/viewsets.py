@@ -113,16 +113,51 @@ class ProductViewSets(viewsets.ModelViewSet):
         proyect = request.data.get('proyect')
         exit_guide = request.data.get('exit_guide')
         exit_date = request.data.get('exit_date')
+        origin = request.data.get('origin')
+        quantity_total_exit = request.data.get('quantity_total_exit')  
 
-        if proyect is None:
-            return Response({'error': 'Se requiere el campo proyect'}, status=status.HTTP_400_BAD_REQUEST)
-            
         try:
             product.exit_point = exit_point
             product.proyect = proyect
             product.exit_guide = exit_guide
             product.exit_date = exit_date
+            product.origin = origin
+            product.quantity_total_exit = quantity_total_exit
             product.save()
-            return Response({'exit_point': product.exit_point,'proyect': product.proyect, 'exit_guide':product.exit_guide, 'exit_date':product.exit_date}, status=status.HTTP_200_OK)
+            return Response({'exit_point': product.exit_point,'proyect': product.proyect, 'exit_guide':product.exit_guide, 'exit_date':product.exit_date, 'origin': product.origin}, status=status.HTTP_200_OK)
         except ValueError:
-            return Response({'error': 'El valor de exit_point, proyect, exit_guide o exit_date no esta bien colocado'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'El valor de exit_point, proyect, exit_guide, exit_date o origin no esta bien colocado'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    @action(detail=True, methods=['put'])
+    def UpdateDatesandSupplierandEnterPointandEnterGuide(self, request, pk=None):
+        try:
+            product = self.get_object(pk)
+        except Product.DoesNotExist:
+            return Response({'message': 'Producto no encontrado'}, status=status.HTTP_404_NOT_FOUND)
+
+        date_manufacture = request.data.get('date_manufacture')
+        date = request.data.get('date')
+        date_bill =  request.data.get('date_bill')
+        bill_text = request.data.get('bill_text')
+        supplier = request.data.get('supplier')
+        entry_point = request.data.get('entry_point')
+        entry_guide = request.data.get('entry_guide')
+        proyect = request.data.get('proyect')
+        origin = request.data.get('origin')
+        quantity_total = request.data.get('quantity_total')
+        
+        try:
+            product.date_manufacture = date_manufacture
+            product.date = date
+            product.proyect = proyect
+            product.date_bill = date_bill
+            product.bill_text = bill_text
+            product.supplier = supplier
+            product.entry_point = entry_point
+            product.entry_guide = entry_guide
+            product.origin = origin
+            product.quantity_total = quantity_total
+            product.save()
+            return Response({'date_manufacture': product.date_manufacture,'date': product.date, 'proyect':product.proyect, 'date_bill':product.date_bill, 'supplier':product.supplier, 'entry_point':product.entry_point, 'entry_guide':product.entry_guide, 'origin':product.origin, 'bill_text':product.bill_text}, status=status.HTTP_200_OK)
+        except ValueError:
+            return Response({'error': 'El valor de date_manufacture, date, proyect, date_bill, supplier, entry_point, entry_guide, origin o bill_text no esta bien colocado'}, status=status.HTTP_400_BAD_REQUEST)
